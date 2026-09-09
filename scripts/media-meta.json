@@ -1,0 +1,114 @@
+{
+  "electronics": [
+    1485,
+    1059
+  ],
+  "equipment-small": [
+    780,
+    520
+  ],
+  "tea-small": [
+    780,
+    438
+  ],
+  "living-small": [
+    780,
+    520
+  ],
+  "entry-small": [
+    780,
+    520
+  ],
+  "wardrobe": [
+    1536,
+    1024
+  ],
+  "bedroom-small": [
+    780,
+    520
+  ],
+  "wardrobe-small": [
+    780,
+    520
+  ],
+  "electronics-small": [
+    780,
+    556
+  ],
+  "kitchen-small": [
+    780,
+    520
+  ],
+  "bedroom": [
+    1536,
+    1024
+  ],
+  "clothes": [
+    1536,
+    1024
+  ],
+  "laundry": [
+    1536,
+    1024
+  ],
+  "files": [
+    1536,
+    1024
+  ],
+  "terrace": [
+    1536,
+    1024
+  ],
+  "clothes-small": [
+    780,
+    520
+  ],
+  "files-small": [
+    780,
+    520
+  ],
+  "study-small": [
+    780,
+    520
+  ],
+  "equipment": [
+    1536,
+    1024
+  ],
+  "bathroom": [
+    1536,
+    1024
+  ],
+  "terrace-small": [
+    780,
+    520
+  ],
+  "living": [
+    1536,
+    1024
+  ],
+  "bathroom-small": [
+    780,
+    520
+  ],
+  "study": [
+    1536,
+    1024
+  ],
+  "tea": [
+    1600,
+    899
+  ],
+  "kitchen": [
+    1536,
+    1024
+  ],
+  "laundry-small": [
+    780,
+    520
+  ],
+  "entry": [
+    1536,
+    1024
+  ]
+}
