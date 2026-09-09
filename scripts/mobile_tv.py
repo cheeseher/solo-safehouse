@@ -25,7 +25,7 @@ def overlay(R,T):
    out+=f'<rect x="{x-625}" y="{y-300}" width="1250" height="600" transform="rotate({a*15} {x} {y})" fill="none" stroke="{color}" stroke-width="12" opacity=".6"/>'
  for x,y,a,label in [(500,6000,90,'客厅常驻'),(2700,2800,90,'用餐临时'),(9250,8850,0,'床尾临时')]:
   out+=f'<g transform="translate({x} {y}) rotate({a})"><rect x="-550" y="-275" width="1100" height="550" fill="#d1def0" stroke="#466c98" stroke-width="22"/><path d="M-625 -290H625" stroke="#263e59" stroke-width="36"/></g>'
-  out+=T(x,y-760,label,140)
+  out+=T(x,9180 if label=='床尾临时' else 1800 if label=='用餐临时' else y-760,label,140)
  out+=R(1100,1950,650,450,'#e2d2b8')+T(1425,2230,'T01 用餐',120)
  return out
 

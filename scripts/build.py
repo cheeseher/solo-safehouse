@@ -57,7 +57,7 @@ for mode in ['layout','life','robot','tv']:
  out+='<defs><marker id="viewarrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6" fill="#647d92"/></marker></defs>'
  out+=additions(R,T,mode)
  if mode=='tv':out+=overlay(R,T)
- for name,x,y,w,h in [('客厅',1900,8000,0,0),('轻厨房',2100,2200,0,0),('玄关',4820,3100,0,0),('设备间',4600,1000,0,0),('工作室',8030,1120,0,0),('卧室',7060,8350,0,0),('卫浴',9640,5280,0,0)]:out+=T(x,y,name,225)
+ for name,x,y,w,h in [('客厅',2300,8650,0,0),('轻厨房',1900,1500,0,0),('玄关',4820,3100,0,0),('设备间',4600,1000,0,0),('工作室',8030,1120,0,0),('卧室',6750,8550,0,0),('卫浴',9640,5280,0,0)]:out+=T(x,y,name,225)
  out+=T(6050,3460,'1100',130)+T(6050,-360,'入户 ↓',230)+T(5500,-690,'内包络 11000 × 9200 mm',170)
  out+=R(900,9320,3200,430,'#dce6d2')+T(2500,9600,'露台另计',170)
  out+='<defs><marker id="arrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6" fill="#296b54"/></marker></defs>'
