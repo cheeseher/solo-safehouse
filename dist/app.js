@@ -27,7 +27,7 @@ const tabs=[...document.querySelectorAll('[data-plan]')];
 function selectPlan(tab){
  const key=tab.dataset.plan, panel=document.querySelector('#plan-panel'),link=panel.querySelector('a'),img=panel.querySelector('img');
  tabs.forEach(t=>{t.setAttribute('aria-selected',String(t===tab));t.tabIndex=t===tab?0:-1;});
- panel.setAttribute('aria-labelledby',tab.id);link.href=`assets/plan-${key}.svg`;link.dataset.caption=`安全屋概念平面 / ${plans[key][0]}`;img.src=link.getAttribute('href');img.alt=link.dataset.caption;document.querySelector('#plan-caption').textContent=plans[key][1];
+ panel.setAttribute('aria-labelledby',tab.id);link.href=`assets/plan-${key}-v2.svg`;link.dataset.caption=`安全屋概念平面 / ${plans[key][0]}`;img.src=link.getAttribute('href');img.alt=link.dataset.caption;document.querySelector('#plan-caption').textContent=plans[key][1];
 }
 tabs.forEach((tab,index)=>{tab.addEventListener('click',()=>selectPlan(tab));tab.addEventListener('keydown',event=>{let next;if(event.key==='ArrowRight')next=(index+1)%tabs.length;else if(event.key==='ArrowLeft')next=(index+tabs.length-1)%tabs.length;else if(event.key==='Home')next=0;else if(event.key==='End')next=tabs.length-1;else return;event.preventDefault();tabs[next].focus();selectPlan(tabs[next]);});});
 function openHash(){let id;try{id=decodeURIComponent(location.hash.slice(1));}catch{return;}const target=document.getElementById(id);if(target instanceof HTMLDetailsElement){target.open=true;requestAnimationFrame(()=>target.scrollIntoView({block:'start'}));}}
