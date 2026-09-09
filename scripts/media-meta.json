@@ -182,5 +182,13 @@
   "bathroom-v4-small": [
     780,
     520
+  ],
+  "living-fixed-v5": [
+    1536,
+    1024
+  ],
+  "living-fixed-v5-small": [
+    780,
+    520
   ]
 }
