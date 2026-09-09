@@ -190,5 +190,37 @@
   "living-fixed-v5-small": [
     780,
     520
+  ],
+  "living-mobile-v6": [
+    1536,
+    1024
+  ],
+  "living-mobile-v6-small": [
+    780,
+    520
+  ],
+  "tv-rear-v6": [
+    1536,
+    1024
+  ],
+  "tv-rear-v6-small": [
+    780,
+    520
+  ],
+  "bedroom-v6": [
+    1536,
+    1024
+  ],
+  "bedroom-v6-small": [
+    780,
+    520
+  ],
+  "laundry-v6": [
+    1536,
+    1024
+  ],
+  "laundry-v6-small": [
+    780,
+    520
   ]
 }
