@@ -1,0 +1,32 @@
+"""Shared concept coordinates in mm. Up is diagram north, not surveyed orientation."""
+SOFA={'closed':[3300,5000,1050,2600],'envelope':[2550,4900,2150,2800],'seat_width':1050,'support_length':1850,'passage':[700,4600,1000,3600]}
+FIXTURES=[('床架',8260,6320,1980,2180),('床垫',8350,6440,1800,2000),('工作台',10100,800,900,1800),('工作椅',9400,1500,650,650),('淋浴',7940,2920,1200,1200),('浴缸',10200,4320,800,1700),('马桶',10250,3520,660,680)]
+VIEWS=[('V01','living',2500,4250,2500,5350,'客厅 · 从厨房侧朝露台看；左侧沙发，右侧电视。'),('V02','study',7550,2200,9800,1300,'工作室 · 从入口朝窗边看；左侧文件柜，右侧窗下工作台。'),('V03','kitchen',2200,3370,2200,2100,'轻厨房 · 从客厅朝里看；左侧操作台，正面设备与饮水柜。'),('V04','bedroom',7280,8770,9230,6900,'卧室 · 从床尾斜看床头；左侧衣柜，右侧外窗。'),('V05','bathroom',9060,5720,9550,3520,'卫浴 · 从入口看洗漱台；左侧淋浴，右侧马桶与浴缸。'),('V06','laundry',5940,4050,7400,4050,'家政 · 正看 C08；左洗烘、中基站、右工具。')]
+ROUTES={'robot':[[(7100,4130),(6050,4130),(4950,4130),(1900,4130),(1900,8600)],[(6050,4130),(6050,1950),(7090,1950),(8500,1950)],[(6050,4130),(6050,5570),(7190,5570),(7190,7470)],[(1900,4130),(1900,2700)],[(6050,2400),(4750,2400),(4750,3280)]], 'life':[[(6050,0),(6050,2400),(4750,2400),(4750,4030),(1900,4030),(1900,2700)],[(1900,4200),(1900,8600)],[(6050,5000),(6050,5570),(7300,5570),(9450,5570)],[(7200,5570),(7200,7450)],[(6050,1950),(8500,1950)]]}
+
+def additions(R,T,mode):
+ out=''
+ x,y,w,h=SOFA['envelope']
+ out+=f'<rect x="{x}" y="{y}" width="{w}" height="{h}" fill="#b67a42" fill-opacity=".08" stroke="#a36e36" stroke-width="22" stroke-dasharray="65 40"/>'
+ out+=R(*SOFA['closed'],'#bbc4b7')+R(4080,5140,200,2320,'#9daf9f')
+ out+=T(3800,6100,'S01',180)+T(3760,6450,'布艺电动',140)+T(3760,6700,'朝向电视 ←',140)
+ out+=T(3570,7920,'虚线：最大活动预留',140,'#925f2f')
+ out+=R(700,4600,1000,3600,'#e1ecd9')+T(1200,8050,'通路 1000',135)
+ out+='<circle cx="3890" cy="4570" r="210" fill="#d8d4c8" stroke="#8e998e" stroke-width="14"/>'
+ for name,x,y,w,h in FIXTURES:out+=R(x,y,w,h,'#d8e1d9' if name=='淋浴' else '#e1dccf')+T(x+w/2,y+h/2+50,name,135)
+ # C07M is wall mounted over C07, not additional floor area.
+ out+=T(10050,3110,'C07M / 镜柜',120)
+ out+=T(3230,425,'T01 停放',120)
+ # Explicit windows and terrace access; orientations are conventional.
+ for x1,y1,x2,y2 in [(0,950,0,2650),(11000,750,11000,2700),(11000,6500,11000,8850),(900,9200,4900,9200)]:
+  out+=f'<path d="M{x1} {y1} L{x2} {y2}" stroke="#6591a2" stroke-width="45"/>'
+ out+=T(2850,9020,'露台推拉门 / 入口',140)
+ if mode=='layout':
+  for v,_,x,y,a,b,_ in VIEWS:
+   out+=f'<path d="M{x} {y} L{a} {b}" stroke="#647d92" stroke-width="24" marker-end="url(#viewarrow)"/>'
+   out+=f'<circle cx="{x}" cy="{y}" r="185" fill="#f8fbfc" stroke="#647d92" stroke-width="16"/>'+T(x,y+45,v,120)
+ if mode=='robot':out+=T(3700,7100,'机构区禁入',150,'#925f2f')
+ return out
+
+def view_notes():
+ return '<div class="view-index"><h3>从平面，找到镜头。</h3><p>图上方作为示意北向，蓝色箭头表示观看方向；不是房屋实测朝向。点击编号跳到对应空间。</p><div class="view-links">'+''.join(f'<a href="#room-{room}"><b>{v}</b><span>{note}</span></a>' for v,room,*_,note in VIEWS)+'</div><p class="caption">玄关、露台、设备与收纳照片是局部参考；不据此增加门洞或推断相邻房间。效果图仍有透视与细部误差，精确占位以本版统一平面和尺寸图为准。</p></div>'

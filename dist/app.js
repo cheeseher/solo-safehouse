@@ -22,15 +22,34 @@ if(dialog && typeof dialog.showModal === 'function'){
  dialog.addEventListener('close',()=>{document.documentElement.classList.remove('no-scroll');resetZoom();lastTrigger?.focus({preventScroll:true});});
  zoom.addEventListener('click',()=>{const active=stage.classList.toggle('zoomed');zoom.textContent=active?'适合屏幕':'放大细节';zoom.setAttribute('aria-pressed',String(active));});
 }
-const plans={layout:['全屋布局','布局图 / 柜号与下方收纳图一一对应，点图可放大。'],life:['生活动线','绿色线表示典型生活路径：回家、用餐、洗浴与休息。为示意连接，非所有人的唯一走法。'],robot:['机器人清扫','绿色为主要连接；棕色虚线为有条件开放的卫浴干区。淋浴、设备间和室外不纳入清扫；路线不等于实际算法轨迹。']};
+const plans={layout:['全屋布局','布局图 / 柜号与收纳图对应；V01–V06 为效果图视角，棕虚线为沙发活动范围。'],life:['生活动线','绿色线表示典型生活路径：回家、用餐、洗浴与休息。为示意连接，非所有人的唯一走法。'],robot:['机器人清扫','绿色为主要连接；棕色虚线为有条件开放的卫浴干区。淋浴、设备间和室外不纳入清扫；路线不等于实际算法轨迹。']};
 const tabs=[...document.querySelectorAll('[data-plan]')];
 function selectPlan(tab){
  const key=tab.dataset.plan, panel=document.querySelector('#plan-panel'),link=panel.querySelector('a'),img=panel.querySelector('img');
  tabs.forEach(t=>{t.setAttribute('aria-selected',String(t===tab));t.tabIndex=t===tab?0:-1;});
- panel.setAttribute('aria-labelledby',tab.id);link.href=`assets/plan-${key}-v2.svg`;link.dataset.caption=`安全屋概念平面 / ${plans[key][0]}`;img.src=link.getAttribute('href');img.alt=link.dataset.caption;document.querySelector('#plan-caption').textContent=plans[key][1];
+ panel.setAttribute('aria-labelledby',tab.id);link.href=`assets/plan-${key}-v4.svg`;link.dataset.caption=`安全屋概念平面 / ${plans[key][0]}`;img.src=link.getAttribute('href');img.alt=link.dataset.caption;document.querySelector('#plan-caption').textContent=plans[key][1];
 }
 tabs.forEach((tab,index)=>{tab.addEventListener('click',()=>selectPlan(tab));tab.addEventListener('keydown',event=>{let next;if(event.key==='ArrowRight')next=(index+1)%tabs.length;else if(event.key==='ArrowLeft')next=(index+tabs.length-1)%tabs.length;else if(event.key==='Home')next=0;else if(event.key==='End')next=tabs.length-1;else return;event.preventDefault();tabs[next].focus();selectPlan(tabs[next]);});});
 function openHash(){let id;try{id=decodeURIComponent(location.hash.slice(1));}catch{return;}const target=document.getElementById(id);if(target instanceof HTMLDetailsElement){target.open=true;requestAnimationFrame(()=>target.scrollIntoView({block:'start'}));}}
 window.addEventListener('hashchange',openHash);openHash();
 document.querySelectorAll('a[href^="#cab-"]').forEach(link=>link.addEventListener('click',()=>{const el=document.getElementById(link.hash.slice(1));if(el)el.open=true;}));
 if('IntersectionObserver' in window){const navLinks=[...document.querySelectorAll('.site-header nav a')];const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(!e.isIntersecting)return;navLinks.forEach(a=>{if(a.hash==='#'+e.target.id)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current');});});},{rootMargin:'-15% 0px -65% 0px'});navLinks.forEach(a=>{const el=document.querySelector(a.hash);if(el)observer.observe(el);});}
+
+// Same-camera concept states: manual first, reversible timed demonstration.
+const sofaFrames=[...document.querySelectorAll('[data-sofa-frame]')];
+const sofaButtons=[...document.querySelectorAll('[data-sofa-state]')];
+const sofaPlay=document.querySelector('#sofa-play');
+const sofaStatus=document.querySelector('#sofa-status');
+let sofaState=0,sofaTimer=null,sofaDirection=1;
+function stopSofa(){clearInterval(sofaTimer);sofaTimer=null;if(sofaPlay){sofaPlay.textContent='演示伸缩 ↔';sofaPlay.setAttribute('aria-pressed','false');}}
+function setSofa(index){sofaState=index;sofaFrames.forEach((f,i)=>f.hidden=i!==index);sofaButtons.forEach((b,i)=>b.setAttribute('aria-pressed',String(i===index)));sofaStatus.textContent=['收起坐姿：脚托折回，便于坐下与起身。','抬腿放松：脚托抬起，靠背保持较直。','后仰躺卧：靠背后仰，腿部连续支撑。'][index]+' 同视角 AI 状态演示，非实拍或机械仿真。';}
+if(sofaFrames.length===3&&sofaPlay){
+ document.querySelector('.sofa-controls').hidden=false;setSofa(0);
+ sofaButtons.forEach((button,i)=>button.addEventListener('click',()=>{stopSofa();setSofa(i);}));
+ sofaPlay.addEventListener('click',()=>{if(sofaTimer){stopSofa();return;}sofaDirection=sofaState===2?-1:1;sofaPlay.textContent='暂停演示';sofaPlay.setAttribute('aria-pressed','true');setSofa(sofaState+sofaDirection);sofaTimer=setInterval(()=>{if(sofaState===2)sofaDirection=-1;if(sofaState===0)sofaDirection=1;setSofa(sofaState+sofaDirection);},2200);});
+ document.addEventListener('visibilitychange',()=>{if(document.hidden)stopSofa();});
+ if('IntersectionObserver' in window)new IntersectionObserver(es=>{if(!es[0].isIntersecting)stopSofa();}).observe(document.querySelector('#sofa-demo'));
+ if(dialog)dialog.addEventListener('close',stopSofa);
+ document.querySelector('#sofa-frames').addEventListener('click',stopSofa);
+ window.addEventListener('pagehide',stopSofa);
+}

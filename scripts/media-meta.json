@@ -126,5 +126,61 @@
   "living-v2-small": [
     780,
     520
+  ],
+  "living-v3": [
+    1536,
+    1024
+  ],
+  "living-v3-small": [
+    780,
+    520
+  ],
+  "skirting": [
+    1536,
+    1024
+  ],
+  "skirting-small": [
+    780,
+    520
+  ],
+  "sofa-closed": [
+    1536,
+    1024
+  ],
+  "sofa-closed-small": [
+    780,
+    520
+  ],
+  "sofa-legs": [
+    1536,
+    1024
+  ],
+  "sofa-legs-small": [
+    780,
+    520
+  ],
+  "sofa-recline": [
+    1536,
+    1024
+  ],
+  "sofa-recline-small": [
+    780,
+    520
+  ],
+  "kitchen-v4": [
+    1536,
+    1024
+  ],
+  "kitchen-v4-small": [
+    780,
+    520
+  ],
+  "bathroom-v4": [
+    1536,
+    1024
+  ],
+  "bathroom-v4-small": [
+    780,
+    520
   ]
 }
